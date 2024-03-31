@@ -407,7 +407,7 @@ class Program
                         wordUsedCount.First(x => x.Word == word.Word).Muted = false;
                     }
 
-                    var wordsToBlock = wordUsedCount.Where(x => x.Muted && !x.Muted).ToList();
+                    var wordsToBlock = wordUsedCount.Where(x => x.Banned && !x.Muted).ToList();
 
 
                     if (wordsToBlock.Count <= 1100)
