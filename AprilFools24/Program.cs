@@ -412,7 +412,7 @@ class Program
                     {
                         x.Name = "APRIL FOOLS MUTED WORDS";
                         x.TriggerType = AutoModTriggerType.Keyword;
-                        x.KeywordFilter = wordsToMute.Select(i => i.Length < 4 ? $"* {i} *" : $"*{i}*").ToArray();
+                        x.KeywordFilter = wordsToMute.Select(i => i.Length < 4 ? $"{i}" : $"*{i}*").ToArray();
                         x.Actions = new AutoModRuleActionProperties[]{
                             new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "You naughty you! Think twice next time!" },
                             new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod },
@@ -478,7 +478,7 @@ class Program
                         {
                             x.Name = "APRIL FOOLS BANNED WORDS 1";
                             x.TriggerType = AutoModTriggerType.Keyword;
-                            x.KeywordFilter = first1000Words.Select(i => i.Length < 4 ? $"* {i} *" : $"*{i}*").ToArray();
+                            x.KeywordFilter = first1000Words.Select(i => i.Length < 4 ? $"{i}" : $"*{i}*").ToArray();
                             x.Actions = new AutoModRuleActionProperties[]{
                                 new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "Pretending I didn't see that! Next time, no mercy!" },
                                 new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
@@ -500,7 +500,7 @@ class Program
                         {
                             x.Name = "APRIL FOOLS BANNED WORDS 2";
                             x.TriggerType = AutoModTriggerType.Keyword;
-                            x.KeywordFilter = second1000Words.Select(i => i.Length < 4 ? $"* {i} *" : $"*{i}*").ToArray();
+                            x.KeywordFilter = second1000Words.Select(i => i.Length < 4 ? $"{i}" : $"*{i}*").ToArray();
                             x.Actions = new AutoModRuleActionProperties[]{
                                 new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "Pretending I didn't see that! Next time, no mercy!" },
                                 new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
