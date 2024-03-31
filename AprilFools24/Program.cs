@@ -415,6 +415,7 @@ class Program
                             new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod },
                             new AutoModRuleActionProperties { Type = AutoModActionType.Timeout, TimeoutDuration = TimeSpan.FromSeconds(10)}
                         };
+                        x.ExemptChannels = ExcludeChannels.ToArray();
                         x.Enabled = true;
                     });
 
@@ -479,6 +480,7 @@ class Program
                                 new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "Pretending I didn't see that! Next time, no mercy!" },
                                 new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
                             };
+                            x.ExemptChannels = ExcludeChannels.ToArray();
                             x.Enabled = true;
                         });
 
@@ -497,9 +499,10 @@ class Program
                             x.TriggerType = AutoModTriggerType.Keyword;
                             x.KeywordFilter = second1000Words.Select(i => i.Length < 4 ? $"* {i} *" : $"*{i}*").ToArray();
                             x.Actions = new AutoModRuleActionProperties[]{
-                            new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "Pretending I didn't see that! Next time, no mercy!" },
-                            new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
+                                new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "Pretending I didn't see that! Next time, no mercy!" },
+                                new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
                             };
+                            x.ExemptChannels = ExcludeChannels.ToArray();
                             x.Enabled = true;
                         });
 
