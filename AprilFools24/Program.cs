@@ -195,8 +195,8 @@ class Program
             {
                 string availableCommands = "Available commands: \n";
                 availableCommands += "!say <message> - bot will say the message \n";
-                availableCommands += "!autoMod - create a new auto mod rule \n";
-                availableCommands += "!wordCount - get the top 10 words used banned and unbanned \n";
+                availableCommands += "!automod - create a new auto mod rule \n";
+                availableCommands += "!info - get the top 10 words used banned and unbanned \n";
                 availableCommands += "!list - get the word list as a json file \n";
                 await message.Channel.SendMessageAsync(availableCommands);
 
@@ -218,13 +218,13 @@ class Program
                 return true;
             }
 
-            if (message.Content.ToLower() == "!wordcount")
+            if (message.Content.ToLower() == "!info")
             {   
                 int count = 10;
 
                 // send current word count sorted by count
-                var topNonBanndedWords = wordUsedCount.Where(x => x.Banned).OrderByDescending(x => x.Count).Take(count).ToList();
-                var topBanndedWords = wordUsedCount.Where(x => !x.Banned).OrderByDescending(x => x.Count).Take(count).ToList();
+                var topNonBanndedWords = wordUsedCount.Where(x => !x.Banned).OrderByDescending(x => x.Count).Take(count).ToList();
+                var topBanndedWords = wordUsedCount.Where(x => x.Banned).OrderByDescending(x => x.Count).Take(count).ToList();
 
                 string response = $"Top {count} words about to ban: \n";
                 response += string.Join("\n", topNonBanndedWords.Select(x => x.Word + " - " + x.Count).ToList());
