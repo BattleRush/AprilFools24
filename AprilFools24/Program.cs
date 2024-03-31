@@ -402,8 +402,11 @@ class Program
                     var existingRule = guild.GetAutoModRulesAsync().Result.FirstOrDefault(x => x.Name == "APRIL FOOLS MUTED WORDS");
                     if (existingRule != null)
                     {
+                        Console.WriteLine("Deleting rule APRIL FOOLS MUTED WORDS");
                         await existingRule.DeleteAsync();
                     }
+
+                    Console.WriteLine("Creating rule APRIL FOOLS MUTED WORDS with words " + wordsToMute.Count);
 
                     var mutedRule = await guild.CreateAutoModRuleAsync(x =>
                     {
@@ -469,7 +472,7 @@ class Program
                     {
                         var first1000Words = wordsToBlock.Take(1000).Select(x => x.Word).ToList();
 
-                        Console.WriteLine("Creating rule APRIL FOOLS BANNED WORD 1 with words " + first1000Words.Count);
+                        Console.WriteLine("Creating rule APRIL FOOLS BANNED WORDS 1 with words " + first1000Words.Count);
 
                         var blockRule1 = await guild.CreateAutoModRuleAsync(x =>
                         {
