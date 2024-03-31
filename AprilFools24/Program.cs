@@ -319,7 +319,7 @@ class Program
 
                 if (ExcludeChannels.Contains(message.Channel.Id) || ExcludeChannels.Contains(categoryId))
                 {
-                    weight = 5;
+                    weight = 2;
 
                     // if this word contains a character that isnt a letter or number then use a weight of 1
                     if (word.Any(x => !char.IsLetterOrDigit(x)))
@@ -327,7 +327,7 @@ class Program
 
                     // if this word exists in WordsAlpha list then use weight of 50
                     if (WordsAlpha.Contains(word))
-                        weight = 50;
+                        weight = 3;
                 }
             }
 
@@ -410,11 +410,11 @@ class Program
                     var existingRule = guild.GetAutoModRulesAsync().Result.FirstOrDefault(x => x.Name == "APRIL FOOLS MUTED WORDS");
                     if (existingRule != null)
                     {
-                        Console.WriteLine("Deleting rule APRIL FOOLS MUTED WORDS");
+                        Console.WriteLine($"{DateTime.Now} Deleting rule APRIL FOOLS MUTED WORDS");
                         await existingRule.DeleteAsync();
                     }
 
-                    Console.WriteLine("Creating rule APRIL FOOLS MUTED WORDS with words " + wordsToMute.Count);
+                    Console.WriteLine($"{DateTime.Now} Creating rule APRIL FOOLS MUTED WORDS with words " + wordsToMute.Count);
 
                     var mutedRule = await guild.CreateAutoModRuleAsync(x =>
                     {
@@ -460,7 +460,7 @@ class Program
                         var existingRule1 = guild.GetAutoModRulesAsync().Result.FirstOrDefault(x => x.Name == "APRIL FOOLS BANNED WORDS 1");
                         if (existingRule1 != null)
                         {
-                            Console.WriteLine("Deleting rule APRIL FOOLS BANNED WORDS 1");
+                            Console.WriteLine($"{DateTime.Now} Deleting rule APRIL FOOLS BANNED WORDS 1");
                             await existingRule1.DeleteAsync();
                         }
                     }
@@ -471,7 +471,7 @@ class Program
                         var existingRule2 = guild.GetAutoModRulesAsync().Result.FirstOrDefault(x => x.Name == "APRIL FOOLS BANNED WORDS 2");
                         if (existingRule2 != null)
                         {
-                            Console.WriteLine("Deleting rule APRIL FOOLS BANNED WORDS 2");
+                            Console.WriteLine($"{DateTime.Now} Deleting rule APRIL FOOLS BANNED WORDS 2");
                             await existingRule2.DeleteAsync();
                         }
                     }
@@ -480,7 +480,7 @@ class Program
                     {
                         var first1000Words = wordsToBlock.Take(1000).Select(x => x.Word).ToList();
 
-                        Console.WriteLine("Creating rule APRIL FOOLS BANNED WORDS 1 with words " + first1000Words.Count);
+                        Console.WriteLine($"{DateTime.Now} Creating rule APRIL FOOLS BANNED WORDS 1 with words " + first1000Words.Count);
 
                         var blockRule1 = await guild.CreateAutoModRuleAsync(x =>
                         {
