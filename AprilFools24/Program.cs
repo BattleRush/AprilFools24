@@ -199,6 +199,7 @@ class Program
                 availableCommands += "!automod - create a new auto mod rule \n";
                 availableCommands += "!info - get the top 10 words used banned and unbanned \n";
                 availableCommands += "!list - get the word list as a json file \n";
+                availableCommands += "!kill - kill the bot \n";
                 await message.Channel.SendMessageAsync(availableCommands);
 
                 return true;
