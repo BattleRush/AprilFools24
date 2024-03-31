@@ -245,21 +245,31 @@ class Program
             // create auto mod rule blocking 
             if (message.Content == "!autoMod")
             {
-                // create automod rule
-                ulong guildId = GuildId;
-                var guild = _client.GetGuild(guildId);
+                try{
+                    // create automod rule
+                    ulong guildId = GuildId;
+                    var guild = _client.GetGuild(guildId);
+
+                    await message.Channel.SendMessageAsync("Creating new auto mod rule for guild " + guild.Name);
 
 
-                var channel = guild.CreateAutoModRuleAsync(x =>
+                    var channel = await guild.CreateAutoModRuleAsync(x =>
+                    {
+                        x.Name = "Test Filter";
+                        x.TriggerType = AutoModTriggerType.Keyword;
+                        x.KeywordFilter = new string[] { "cat", "dog", "foo", "bar" };
+                        x.Actions = new AutoModRuleActionProperties[]{
+                        new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "You cannot use these words" },
+                        new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
+                        };
+                    });
+
+                    await message.Channel.SendMessageAsync("Created new auto mod rule " + channel.Name);
+                }
+                catch(Exception e)
                 {
-                    x.Name = "Test Filter";
-                    x.TriggerType = AutoModTriggerType.Keyword;
-                    x.KeywordFilter = new string[] { "cat", "dog", "foo", "bar" };
-                    x.Actions = new AutoModRuleActionProperties[]{
-                    new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "You cannot use these words" },
-                    new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
-                    };
-                });
+                    await message.Channel.SendMessageAsync(e.Message);
+                }
             }
         }
 
@@ -395,7 +405,7 @@ class Program
                         await existingRule.DeleteAsync();
                     }
 
-                    var channel = guild.CreateAutoModRuleAsync(x =>
+                    var mutedRule = await guild.CreateAutoModRuleAsync(x =>
                     {
                         x.Name = "APRIL FOOLS MUTED WORDS";
                         x.TriggerType = AutoModTriggerType.Keyword;
@@ -407,6 +417,8 @@ class Program
                         };
                         x.Enabled = true;
                     });
+
+                    Console.WriteLine(mutedRule.Name + " created");
 
                     await guild.GetTextChannel(ChannelToPostAutoMod).SendMessageAsync("Applied new mute rule");
                 }
@@ -458,17 +470,20 @@ class Program
 
                         Console.WriteLine("Creating rule APRIL FOOLS BANNED WORD 1 with words " + first1000Words.Count);
 
-                        var automod1 = await guild.CreateAutoModRuleAsync(x =>
+                        var blockRule1 = await guild.CreateAutoModRuleAsync(x =>
                         {
                             x.Name = "APRIL FOOLS BANNED WORDS 1";
                             x.TriggerType = AutoModTriggerType.Keyword;
                             x.KeywordFilter = first1000Words.Select(i => i.Length < 4 ? $"* {i} *" : $"*{i}*").ToArray();
                             x.Actions = new AutoModRuleActionProperties[]{
-                        new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "Pretending I didn't see that! Next time, no mercy!" },
-                        new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
+                                new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "Pretending I didn't see that! Next time, no mercy!" },
+                                new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
                             };
                             x.Enabled = true;
                         });
+
+                        
+                        Console.WriteLine(blockRule2.Name + " created");
                     }
 
                     // if there are more than 1000 rules create WORD 2
@@ -476,7 +491,7 @@ class Program
                     {
                         var second1000Words = wordsToBlock.Skip(1000).Take(1000).Select(x => x.Word).ToList();
 
-                        var channel2 = guild.CreateAutoModRuleAsync(x =>
+                        var blockRule2 = await guild.CreateAutoModRuleAsync(x =>
                         {
                             x.Name = "APRIL FOOLS BANNED WORDS 2";
                             x.TriggerType = AutoModTriggerType.Keyword;
@@ -487,6 +502,9 @@ class Program
                             };
                             x.Enabled = true;
                         });
+
+                        
+                        Console.WriteLine(blockRule2.Name + " created");
                     }
                 }
 
