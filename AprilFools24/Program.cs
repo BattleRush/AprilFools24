@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using System.Diagnostics;
 
 namespace AprilFools24;
 
@@ -214,6 +215,14 @@ class Program
                     response += messageContent[i] + " ";
                 }
                 await message.Channel.SendMessageAsync(response);
+
+                return true;
+            }
+
+            if (message.Content.ToLower() == "!kill")
+            {
+                await message.Channel.SendMessageAsync("Shutting down bot");
+                Process.GetCurrentProcess().Kill();
 
                 return true;
             }
