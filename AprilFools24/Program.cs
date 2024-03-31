@@ -483,7 +483,7 @@ class Program
                         });
 
                         
-                        Console.WriteLine(blockRule2.Name + " created");
+                        Console.WriteLine(blockRule1.Name + " created");
                     }
 
                     // if there are more than 1000 rules create WORD 2
