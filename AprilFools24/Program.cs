@@ -104,6 +104,9 @@ class Program
         Console.WriteLine("Loaded " + BannedUsers.Count + " banned users");
         Console.WriteLine("Loaded " + WordsAlpha.Count + " words_alpha");
 
+        Console.WriteLine("Banned count: " + wordUsedCount.Count(x => x.Banned));
+        Console.WriteLine("Mutted count: " + wordUsedCount.Count(x => x.Muted));
+
 
         var config = new DiscordSocketConfig
         {
