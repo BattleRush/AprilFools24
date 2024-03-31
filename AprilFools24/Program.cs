@@ -243,7 +243,7 @@ class Program
             }
 
             // create auto mod rule blocking 
-            if (message.Content == "!autoMod")
+            if (message.Content.ToLower() == "!automod")
             {
                 try{
                     // create automod rule
