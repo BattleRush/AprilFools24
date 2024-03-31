@@ -241,6 +241,26 @@ class Program
 
                 return true;
             }
+
+            // create auto mod rule blocking 
+            if (message.Content == "!autoMod")
+            {
+                // create automod rule
+                ulong guildId = GuildId;
+                var guild = _client.GetGuild(guildId);
+
+
+                var channel = guild.CreateAutoModRuleAsync(x =>
+                {
+                    x.Name = "Test Filter";
+                    x.TriggerType = AutoModTriggerType.Keyword;
+                    x.KeywordFilter = new string[] { "cat", "dog", "foo", "bar" };
+                    x.Actions = new AutoModRuleActionProperties[]{
+                    new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "You cannot use these words" },
+                    new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
+                    };
+                });
+            }
         }
 
 
@@ -477,28 +497,6 @@ class Program
 
                 lastAutoMod = DateTime.Now;
             }
-
-            // create auto mod rule blocking 
-            if (message.Content == "!autoMod")
-            {
-                // create automod rule
-                ulong guildId = GuildId;
-                var guild = _client.GetGuild(guildId);
-
-
-                var channel = guild.CreateAutoModRuleAsync(x =>
-                {
-                    x.Name = "Test Filter";
-                    x.TriggerType = AutoModTriggerType.Keyword;
-                    x.KeywordFilter = new string[] { "cat", "dog", "foo", "bar" };
-                    x.Actions = new AutoModRuleActionProperties[]{
-                    new AutoModRuleActionProperties { Type = AutoModActionType.BlockMessage, CustomMessage = "You cannot use these words" },
-                    new AutoModRuleActionProperties { Type = AutoModActionType.SendAlertMessage, ChannelId = ChannelToPostAutoMod }
-                    };
-                });
-
-            }
-
         }
         catch (Exception e)
         {
