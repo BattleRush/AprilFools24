@@ -66,7 +66,7 @@ class Program
     public static int AutoModTime = 5 * 60; // in seconds
     public static int SaveToDiskTime = 60;
     public static ulong ChannelToPostAutoMod = 1224111058793529504;
-    public static ulong MessageChannelId = 1224111058793529504;
+    public static ulong MessageChannelId = 1224132818100162611;
     public static double WordWithMuteProbability = 0.25;
     public static List<WordInfo> wordUsedCount = new List<WordInfo>();
 
@@ -216,18 +216,20 @@ class Program
             }
 
             if (message.Content.ToLower() == "!wordcount")
-            {
-                // send current word count sorted by count
-                var topNonBanndedWords = wordUsedCount.Where(x => !x.Banned).OrderByDescending(x => x.Count).Take(10).ToList();
-                var topWords = topNonBanndedWords.Select(x => x.Word + " - " + x.Count).ToList();
+            {   
+                int count = 10;
 
-                string response = "Top 10 words: \n";
-                response += string.Join("\n", topWords);
+                // send current word count sorted by count
+                var topNonBanndedWords = wordUsedCount.Where(x => x.Banned).OrderByDescending(x => x.Count).Take(count).ToList();
+                var topBanndedWords = wordUsedCount.Where(x => !x.Banned).OrderByDescending(x => x.Count).Take(count).ToList();
+
+                string response = $"Top {count} words about to ban: \n";
+                response += string.Join("\n", topNonBanndedWords.Select(x => x.Word + " - " + x.Count).ToList());
 
                 await message.Channel.SendMessageAsync(response);
 
-                response = "Top Banned words: \n";
-                response += string.Join("\n", topNonBanndedWords.Select(x => x.Word + " - " + x.Count).ToList());
+                response = $"Top {count} Banned words: \n";
+                response += string.Join("\n", topBanndedWords.Select(x => x.Word + " - " + x.Count).ToList());
                 await message.Channel.SendMessageAsync(response);
 
                 return true;
