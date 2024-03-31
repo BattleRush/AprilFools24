@@ -290,7 +290,7 @@ class Program
             word = word.ToLower();
 
             if (i == 0 && !char.IsLetter(word[0]))
-                word = word.Substring(1);
+                continue;
 
             if (word.Length < 2 || word.Length > 15)
                 continue;
