@@ -401,7 +401,7 @@ class Program
                     // send in channel
                     string response = "Top words im about to ban (with mute): \n";
                     response += string.Join("\n", bannedWords.Select(x => x.Word + " - " + x.Count).ToList());
-                    await guild.GetTextChannel(ChannelToPostAutoMod).SendMessageAsync(response);
+                    await guild.GetTextChannel(MessageChannelId).SendMessageAsync(response);
 
                     // mark the words as banned and muted
                     foreach (var word in bannedWords)
@@ -442,7 +442,7 @@ class Program
 
                     Console.WriteLine(mutedRule.Name + " created");
 
-                    await guild.GetTextChannel(ChannelToPostAutoMod).SendMessageAsync("Applied new mute rule");
+                    await guild.GetTextChannel(MessageChannelId).SendMessageAsync("Applied new mute rule");
                 }
                 else
                 {
@@ -452,7 +452,7 @@ class Program
                     // send in channel
                     string response = "Top words im about to ban: \n";
                     response += string.Join("\n", wordsToBann.Select(x => x.Word + " - " + x.Count).ToList());
-                    await guild.GetTextChannel(ChannelToPostAutoMod).SendMessageAsync(response);
+                    await guild.GetTextChannel(MessageChannelId).SendMessageAsync(response);
 
                     // mark the words as banned and muted
                     foreach (var word in wordsToBann)
@@ -545,7 +545,7 @@ class Program
             Console.WriteLine(e.Message);
 
             // send exception to channel
-            await _client.GetGuild(GuildId).GetTextChannel(ChannelToPostAutoMod).SendMessageAsync(e.Message);
+            await _client.GetGuild(GuildId).GetTextChannel(MessageChannelId).SendMessageAsync(e.Message);
         }
     }
 }
