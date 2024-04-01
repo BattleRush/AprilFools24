@@ -290,7 +290,7 @@ class Program
 
 
         // split message by spaces and new lines
-        string[] words = message.Content.Split(new char[] { ' ', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] words = message.Content.Split(new string[] { " ", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
         // remove duplicates
         words = words.Distinct().ToArray();
